@@ -1,0 +1,20 @@
+{
+  "name": "react-drag-and-drop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SimoNonnis/react-drag-and-drop.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SimoNonnis/react-drag-and-drop/issues"
+  },
+  "homepage": "https://github.com/SimoNonnis/react-drag-and-drop#readme"
+}
