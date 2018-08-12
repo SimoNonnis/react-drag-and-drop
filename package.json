@@ -10,6 +10,7 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "emotion": "^9.2.6",
     "react": "^16.4.2",
     "react-dom": "^16.4.2"
   },
