@@ -7,11 +7,13 @@ export default class App extends Component {
   state = initialData;
 
   render() {
-    return this.state.columnOrder.map(columnId => {
-      const column = this.state.columns[columnId];
-      const tasks = column.taskIDs.map(taskId => this.state.tasks[taskId]);
+    const { columnOrder, columns, tasks } = this.state;
 
-      return <Column key={column.id} column={column} tasks={tasks} />;
+    return columnOrder.map(columnId => {
+      const column = columns[columnId];
+      const taskList = column.taskIDs.map(taskId => tasks[taskId]);
+
+      return <Column key={column.id} column={column} tasks={taskList} />;
     });
   }
 }
