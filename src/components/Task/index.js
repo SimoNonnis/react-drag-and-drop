@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import styled from 'react-emotion';
+import styled from 'styled-components';
 
-const Container = styled('div')`
+const Container = styled.div`
   padding: 0.5em;
   border: 1px solid lightgrey;
   margin-bottom: 0.5em;

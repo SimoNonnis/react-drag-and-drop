@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
-import styled from 'react-emotion';
+import styled from 'styled-components';
 import { Task } from 'components';
 
-const Container = styled('div')`
+const Container = styled.div`
   margin: 1em;
   border: 1px solid tomato;
   border-radius: 3px;
 `;
-const Title = styled('h3')`
+const Title = styled.h3`
   padding: 1em;
   margin: 0;
 `;
-const TaskList = styled('div')`
+const TaskList = styled.div`
   padding: 1em;
 `;
 
