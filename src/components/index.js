@@ -1,1 +1,2 @@
-export { App } from './App';
+export { Column } from './Column';
+export { Task } from './Task';
