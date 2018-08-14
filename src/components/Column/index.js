@@ -4,8 +4,9 @@ import { Task } from 'components';
 
 const Container = styled.div`
   margin: 1em;
-  border: 1px solid tomato;
+  border: 1px solid #dcdcdc;
   border-radius: 3px;
+  background-color: #ffffff;
 `;
 const Title = styled.h3`
   padding: 1em;
