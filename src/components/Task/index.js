@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Draggable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -14,8 +15,21 @@ const Container = styled.div`
 
 export class Task extends Component {
   render() {
-    const { task } = this.props;
+    const { content, id } = this.props.task;
+    const { index } = this.props;
 
-    return <Container>{task.content}</Container>;
+    return (
+      <Draggable draggableId={id} index={index}>
+        {provided => (
+          <Container
+            innerRef={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+          >
+            {content}
+          </Container>
+        )}
+      </Draggable>
+    );
   }
 }
