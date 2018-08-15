@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { DragDropContext } from 'react-beautiful-dnd';
-import { remove, insert, lensProp, lensPath, set } from 'ramda';
+import { isNil, both, remove, insert, lensProp, lensPath, set } from 'ramda';
 
 import { Column } from 'components';
 import initialData from 'initial-data';
@@ -18,12 +18,11 @@ export default class App extends Component {
 
   onDragEnd = result => {
     const { destination, source, draggableId } = result;
+    const isSameColumn = (d, s) => d.droppableId === s.droppableId;
+    const hasSameIndex = (d, s) => d.index === s.index;
+    const noPositionChange = both(isSameColumn, hasSameIndex);
 
-    if (
-      destination === null ||
-      (destination.droppableId === source.droppableId &&
-        destination.index === source.index)
-    ) {
+    if (isNil(destination) || noPositionChange(destination, source)) {
       return;
     } else {
       const column = this.state.columns[source.droppableId];
