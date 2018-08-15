@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { DragDropContext } from 'react-beautiful-dnd';
-import { remove, insert } from 'ramda';
+import { remove, insert, lensProp, lensPath, set } from 'ramda';
 
 import { Column } from 'components';
 import initialData from 'initial-data';
@@ -28,14 +28,21 @@ export default class App extends Component {
     } else {
       const { columns } = this.state;
       const column = columns[source.droppableId];
+      const taskIDsLens = lensProp('taskIDs');
+      const columnLens = lensPath(['columns', `${source.droppableId}`]);
 
       // Take the draggable item outside array
-      const task = remove(source.index, 1, column.taskIDs);
-      // Insert it in his destination position - use ramda insert
-      const taskList = insert(destination.index, draggableId, task);
-      console.log({ result });
-      console.log(task);
-      console.log(taskList);
+      const taskIDs = remove(source.index, 1, column.taskIDs);
+      // Insert it in his destination position
+      const updatedTaskIDs = insert(destination.index, draggableId, taskIDs);
+
+      // Update portion of state
+      const updatedLens = set(taskIDsLens, updatedTaskIDs, column);
+
+      // Prepare new state
+      const newState = set(columnLens, updatedLens, this.state);
+
+      this.setState(newState);
     }
   };
 
