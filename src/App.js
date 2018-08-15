@@ -26,21 +26,20 @@ export default class App extends Component {
     ) {
       return;
     } else {
-      const { columns } = this.state;
-      const column = columns[source.droppableId];
-      const taskIDsLens = lensProp('taskIDs');
-      const columnLens = lensPath(['columns', `${source.droppableId}`]);
+      const column = this.state.columns[source.droppableId];
 
-      // Take the draggable item outside array
+      // Remove dragged item outside array
       const taskIDs = remove(source.index, 1, column.taskIDs);
       // Insert it in his destination position
       const updatedTaskIDs = insert(destination.index, draggableId, taskIDs);
-
       // Update portion of state
-      const updatedLens = set(taskIDsLens, updatedTaskIDs, column);
-
+      const updatedLens = set(lensProp('taskIDs'), updatedTaskIDs, column);
       // Prepare new state
-      const newState = set(columnLens, updatedLens, this.state);
+      const newState = set(
+        lensPath(['columns', `${source.droppableId}`]),
+        updatedLens,
+        this.state
+      );
 
       this.setState(newState);
     }
