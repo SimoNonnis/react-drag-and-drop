@@ -3,6 +3,8 @@ import { Draggable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 
 const Container = styled.div`
+  display: flex;
+  align-items: center;
   padding: 0.5em;
   border: 1px solid #dcdcdc;
   border-radius: 3px;
@@ -12,6 +14,14 @@ const Container = styled.div`
   & + & {
     margin-top: 0.5em;
   }
+`;
+
+const Handle = styled.div`
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 0.5em;
+  background-color: coral;
 `;
 
 export class Task extends Component {
@@ -25,9 +35,9 @@ export class Task extends Component {
           <Container
             innerRef={provided.innerRef}
             {...provided.draggableProps}
-            {...provided.dragHandleProps}
             isDragging={snapshot.isDragging}
           >
+            <Handle {...provided.dragHandleProps} />
             {content}
           </Container>
         )}
