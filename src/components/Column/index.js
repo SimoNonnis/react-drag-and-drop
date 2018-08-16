@@ -8,14 +8,20 @@ const Container = styled.div`
   margin: 1em;
   border: 1px solid #dcdcdc;
   border-radius: 3px;
+
   background-color: #ffffff;
 `;
+
 const Title = styled.h3`
   padding: 1em;
   margin: 0;
 `;
+
 const TaskList = styled.div`
   padding: 1em;
+  transition: background-color 0.3s ease;
+  background-color: ${({ isDraggingOver }) =>
+    isDraggingOver ? '#f3f3f3' : '#ffffff'};
 `;
 
 export class Column extends Component {
@@ -27,8 +33,12 @@ export class Column extends Component {
       <Container>
         <Title>{title}</Title>
         <Droppable droppableId={id}>
-          {provided => (
-            <TaskList innerRef={provided.innerRef} {...provided.droppableProps}>
+          {(provided, snapshot) => (
+            <TaskList
+              innerRef={provided.innerRef}
+              {...provided.droppableProps}
+              isDraggingOver={snapshot.isDraggingOver}
+            >
               {tasks.map((task, index) => (
                 <Task key={task.id} task={task} index={index} />
               ))}
