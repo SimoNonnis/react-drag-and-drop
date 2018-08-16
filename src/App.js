@@ -16,7 +16,7 @@ const Container = styled.div`
 export default class App extends Component {
   state = initialData;
 
-  onDragEnd = result => {
+  handleOnDragEnd = result => {
     const { destination, source, draggableId } = result;
     const isSameColumn = (d, s) => d.droppableId === s.droppableId;
     const hasSameIndex = (d, s) => d.index === s.index;
@@ -49,7 +49,7 @@ export default class App extends Component {
 
     return (
       <Container>
-        <DragDropContext onDragEnd={this.onDragEnd}>
+        <DragDropContext onDragEnd={this.handleOnDragEnd}>
           {columnOrder.map(columnId => {
             const column = columns[columnId];
             const taskList = column.taskIDs.map(taskId => tasks[taskId]);
