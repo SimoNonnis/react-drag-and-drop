@@ -8,7 +8,7 @@ const Container = styled.div`
   padding: 0.5em;
   border: 1px solid #dcdcdc;
   border-radius: 3px;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.2s ease;
   background-color: ${({ isDragging }) => (isDragging ? '#dde9f3' : '#d9d9f8')};
 
   & + & {

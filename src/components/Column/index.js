@@ -8,8 +8,10 @@ const Container = styled.div`
   margin: 1em;
   border: 1px solid #dcdcdc;
   border-radius: 3px;
-
+  width: 280px;
   background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Title = styled.h3`
@@ -19,9 +21,10 @@ const Title = styled.h3`
 
 const TaskList = styled.div`
   padding: 1em;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.2s ease;
   background-color: ${({ isDraggingOver }) =>
     isDraggingOver ? '#f3f3f3' : '#ffffff'};
+  flex-grow: 1;
 `;
 
 export class Column extends Component {
