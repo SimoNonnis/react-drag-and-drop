@@ -25,6 +25,7 @@ const TaskList = styled.div`
   background-color: ${({ isDraggingOver }) =>
     isDraggingOver ? '#f3f3f3' : '#ffffff'};
   flex-grow: 1;
+  min-height: 100px;
 `;
 
 export class Column extends Component {

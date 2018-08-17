@@ -18,6 +18,7 @@ export default class App extends Component {
 
   handleOnDragEnd = result => {
     const { destination, source, draggableId } = result;
+    const column = this.state.columns[source.droppableId];
     const isSameColumn = (d, s) => d.droppableId === s.droppableId;
     const hasSameIndex = (d, s) => d.index === s.index;
     const noPositionChange = both(isSameColumn, hasSameIndex);
@@ -25,22 +26,25 @@ export default class App extends Component {
     if (isNil(destination) || noPositionChange(destination, source)) {
       return;
     } else {
-      const column = this.state.columns[source.droppableId];
+      if (isSameColumn(destination, source)) {
+        // Remove dragged item outside array
+        const taskIDs = remove(source.index, 1, column.taskIDs);
+        // Insert it in his destination position
+        const updatedTaskIDs = insert(destination.index, draggableId, taskIDs);
+        // Update portion of state
+        const updatedLens = set(lensProp('taskIDs'), updatedTaskIDs, column);
+        // Prepare new state
+        const newState = set(
+          lensPath(['columns', `${source.droppableId}`]),
+          updatedLens,
+          this.state
+        );
 
-      // Remove dragged item outside array
-      const taskIDs = remove(source.index, 1, column.taskIDs);
-      // Insert it in his destination position
-      const updatedTaskIDs = insert(destination.index, draggableId, taskIDs);
-      // Update portion of state
-      const updatedLens = set(lensProp('taskIDs'), updatedTaskIDs, column);
-      // Prepare new state
-      const newState = set(
-        lensPath(['columns', `${source.droppableId}`]),
-        updatedLens,
-        this.state
-      );
-
-      this.setState(newState);
+        this.setState(newState);
+      } else {
+        const destinationColumn = this.state.columns[destination.droppableId];
+        console.log(destinationColumn);
+      }
     }
   };
 
