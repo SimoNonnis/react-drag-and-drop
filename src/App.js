@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import { isNil, both, remove, insert, lensProp, lensPath, set } from 'ramda';
+import {
+  isNil,
+  both,
+  remove,
+  insert,
+  lensProp,
+  lensPath,
+  set,
+  equals
+} from 'ramda';
 
 import { Column } from 'components';
 import initialData from 'initial-data';
@@ -26,6 +35,25 @@ export default class App extends Component {
     if (isNil(destination) || noPositionChange(destination, source)) {
       return;
     } else {
+      if (equals(type, 'column')) {
+        const { columnOrder } = this.state;
+        const sourceColumnOrder = remove(source.index, 1, columnOrder);
+        const destinationColumnOrder = insert(
+          destination.index,
+          draggableId,
+          sourceColumnOrder
+        );
+
+        const newState = {
+          ...this.state,
+          columnOrder: destinationColumnOrder
+        };
+
+        this.setState(newState);
+
+        return;
+      }
+
       if (isSameColumn(destination, source)) {
         const column = this.state.columns[source.droppableId];
         // Remove dragged item outside array

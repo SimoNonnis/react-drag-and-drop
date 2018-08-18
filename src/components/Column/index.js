@@ -17,6 +17,11 @@ const Container = styled.div`
 const Title = styled.h3`
   padding: 1em;
   margin: 0;
+
+  &:focus {
+    outline: none;
+    background-color: #f3f3f3;
+  }
 `;
 
 const TaskList = styled.div`
