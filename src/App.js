@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { DragDropContext } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { isNil, both, remove, insert, lensProp, lensPath, set } from 'ramda';
 
 import { Column } from 'components';
@@ -81,16 +81,35 @@ export default class App extends Component {
     const { columnOrder, columns, tasks } = this.state;
 
     return (
-      <Container>
-        <DragDropContext onDragEnd={this.handleOnDragEnd}>
-          {columnOrder.map(columnId => {
-            const column = columns[columnId];
-            const taskList = column.taskIDs.map(taskId => tasks[taskId]);
+      <DragDropContext onDragEnd={this.handleOnDragEnd}>
+        <Droppable
+          droppableId="all-columns"
+          direction="horizontal"
+          type="column"
+        >
+          {provided => (
+            <Container
+              innerRef={provided.innerRef}
+              {...provided.droppableProps}
+            >
+              {columnOrder.map((columnId, index) => {
+                const column = columns[columnId];
+                const taskList = column.taskIDs.map(taskId => tasks[taskId]);
 
-            return <Column key={column.id} column={column} tasks={taskList} />;
-          })}
-        </DragDropContext>
-      </Container>
+                return (
+                  <Column
+                    key={column.id}
+                    column={column}
+                    tasks={taskList}
+                    index={index}
+                  />
+                );
+              })}
+              {provided.placeholder}
+            </Container>
+          )}
+        </Droppable>
+      </DragDropContext>
     );
   }
 }
