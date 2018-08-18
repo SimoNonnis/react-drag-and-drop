@@ -18,7 +18,7 @@ export default class App extends Component {
 
   handleOnDragEnd = result => {
     const { destination, source, draggableId } = result;
-    const column = this.state.columns[source.droppableId];
+
     const isSameColumn = (d, s) => d.droppableId === s.droppableId;
     const hasSameIndex = (d, s) => d.index === s.index;
     const noPositionChange = both(isSameColumn, hasSameIndex);
@@ -27,6 +27,7 @@ export default class App extends Component {
       return;
     } else {
       if (isSameColumn(destination, source)) {
+        const column = this.state.columns[source.droppableId];
         // Remove dragged item outside array
         const taskIDs = remove(source.index, 1, column.taskIDs);
         // Insert it in his destination position
@@ -42,8 +43,36 @@ export default class App extends Component {
 
         this.setState(newState);
       } else {
-        const destinationColumn = this.state.columns[destination.droppableId];
-        console.log(destinationColumn);
+        const { columns } = this.state;
+        const column = columns[source.droppableId];
+        const destinationColumn = columns[destination.droppableId];
+
+        // Remove dragged item outside array
+        const startTaskIDs = remove(source.index, 1, column.taskIDs);
+        // Insert released item in destination column taskIDs array
+        const destinationTaskIDs = insert(
+          destination.index,
+          draggableId,
+          destinationColumn.taskIDs
+        );
+
+        const updatedStartLens = set(lensProp('taskIDs'), startTaskIDs, column);
+        const updatedDestinationLens = set(
+          lensProp('taskIDs'),
+          destinationTaskIDs,
+          destinationColumn
+        );
+
+        const newState = {
+          ...this.state,
+          columns: {
+            ...this.state.columns,
+            [source.droppableId]: updatedStartLens,
+            [destination.droppableId]: updatedDestinationLens
+          }
+        };
+
+        this.setState(newState);
       }
     }
   };
