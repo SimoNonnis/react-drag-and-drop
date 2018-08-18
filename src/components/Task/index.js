@@ -22,6 +22,12 @@ const Handle = styled.div`
   border-radius: 50%;
   margin-right: 0.5em;
   background-color: coral;
+  transition: background-color 0.2s ease;
+
+  &:focus {
+    outline: none;
+    background-color: #6495ed;
+  }
 `;
 
 export class Task extends Component {
