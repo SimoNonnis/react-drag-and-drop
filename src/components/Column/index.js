@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 
-import { Task } from 'components';
+import { TaskList } from 'components';
 
 const Container = styled.div`
   margin: 1em;
@@ -24,7 +24,7 @@ const Title = styled.h3`
   }
 `;
 
-const TaskList = styled.div`
+const TaskListContainer = styled.div`
   padding: 1em;
   transition: background-color 0.2s ease;
   background-color: ${({ isDraggingOver }) =>
@@ -45,16 +45,14 @@ export class Column extends Component {
             <Title {...provided.dragHandleProps}>{title}</Title>
             <Droppable droppableId={id} type="task">
               {(provided, snapshot) => (
-                <TaskList
+                <TaskListContainer
                   innerRef={provided.innerRef}
                   {...provided.droppableProps}
                   isDraggingOver={snapshot.isDraggingOver}
                 >
-                  {tasks.map((task, index) => (
-                    <Task key={task.id} task={task} index={index} />
-                  ))}
+                  <TaskList tasks={tasks} />
                   {provided.placeholder}
-                </TaskList>
+                </TaskListContainer>
               )}
             </Droppable>
           </Container>
