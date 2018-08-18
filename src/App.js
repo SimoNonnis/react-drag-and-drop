@@ -12,7 +12,7 @@ import {
   equals
 } from 'ramda';
 
-import { Column } from 'components';
+import { ColumnList } from 'components';
 import initialData from 'initial-data';
 
 const Container = styled.div`
@@ -122,13 +122,12 @@ export default class App extends Component {
             >
               {columnOrder.map((columnId, index) => {
                 const column = columns[columnId];
-                const taskList = column.taskIDs.map(taskId => tasks[taskId]);
 
                 return (
-                  <Column
+                  <ColumnList
                     key={column.id}
                     column={column}
-                    tasks={taskList}
+                    taskMap={tasks}
                     index={index}
                   />
                 );
