@@ -17,7 +17,7 @@ export default class App extends Component {
   state = initialData;
 
   handleOnDragEnd = result => {
-    const { destination, source, draggableId } = result;
+    const { destination, source, draggableId, type } = result;
 
     const isSameColumn = (d, s) => d.droppableId === s.droppableId;
     const hasSameIndex = (d, s) => d.index === s.index;
